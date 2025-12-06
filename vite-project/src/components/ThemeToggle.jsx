@@ -36,7 +36,7 @@ export const ThemeToggle = () => {
             aria-label="Toggle theme"
             className={cn(
                 "fixed max-sm:hidden top-5 right-5 z-50 p-2 rounded-full transition-colors duration-300",
-                "focus:outline-hidden"
+                "bg-transparent border-none hover:bg-transparent active:bg-transparent focus:outline-hidden"
             )}
             title={isDark ? 'Switch to light' : 'Switch to dark'}
         >
