@@ -1,15 +1,8 @@
-import { useEffect } from 'react';
 import { ThemeToggle } from '../components/ThemeToggle';
 import { StarBackground } from '../components/StarBackground';
+import { Navbar } from '../components/Navbar';
 
 export const Home = () => {
-    useEffect(() => {
-        // Ensure dark mode is enabled by default to show stars
-        if (!localStorage.getItem('theme')) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        }
-    }, []);
 
     return (
         <div 
@@ -24,13 +17,14 @@ export const Home = () => {
             {/* Star Background - Only shows in dark mode */}
             <StarBackground />
             
+            {/* NavBar - Fixed at top with high z-index */}
+            <Navbar />
+            
+            {/* Theme Toggle - Outside content div to avoid z-index issues */}
+            <ThemeToggle />
+            
             {/* Content layer */}
             <div style={{ position: 'relative', zIndex: 10 }}>
-                {/* Theme Toggle */}
-                <ThemeToggle />
-
-                {/* NavBar */}
-
                 {/* Main Content */}
 
                 {/* Footer */}
@@ -38,4 +32,3 @@ export const Home = () => {
         </div>
     );
 };
-
