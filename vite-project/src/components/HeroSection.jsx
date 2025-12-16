@@ -2,10 +2,11 @@
 import { ArrowDown } from "lucide-react";
 export const HeroSection = () => {
     return (
-        <section
-            id="hero"
-            className="relative min-h-screen flex flex-col items-center justify-center px-4"
-        >
+        <>
+            <section
+                id="hero"
+                className="relative min-h-screen flex flex-col items-center justify-center px-4"
+            >
             <div className="container max-w-4xl mx-auto text-center z-10">
                 <div className="space-y-6">
                     <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
@@ -29,6 +30,20 @@ export const HeroSection = () => {
                     </div>
                 </div>
             </div>
-        </section>
+            </section>
+            
+            <div style={{ position: 'fixed', bottom: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 10001 }}>
+                <a
+                    href="#projects"
+                    className="flex flex-col items-center gap-1 text-sm transition-all duration-200 pointer-events-auto no-underline hero-bounce"
+                    style={{ color: '#ffffff' }}
+                >
+                    <div>
+                        <ArrowDown className="w-6 h-6" style={{ color: '#ffffff' }} />
+                    </div>
+                    <span className="text-xs" style={{ color: '#ffffff' }}>Scroll</span>
+                </a>
+            </div>
+        </>
     );
 };

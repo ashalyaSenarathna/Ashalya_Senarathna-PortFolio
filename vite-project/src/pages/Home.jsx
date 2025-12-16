@@ -11,8 +11,7 @@ export const Home = () => {
             style={{
                 minHeight: '100vh',
                 width: '100%',
-                position: 'relative',
-                overflow: 'hidden'
+                position: 'relative'
             }}
         >
             {/* Star Background - Only shows in dark mode */}
