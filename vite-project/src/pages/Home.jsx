@@ -4,11 +4,12 @@ import { Navbar } from '../components/Navbar';
 import { HeroSection } from '../components/HeroSection';
 import { AboutSection } from '../components/AboutSection';
 import { SkillsSection } from '../components/SkillsSection';
+import { ProjectsSection } from '../components/ProjectsSection';
 
 export const Home = () => {
 
     return (
-        <div 
+        <div
             className="min-h-screen bg-background text-foreground"
             style={{
                 minHeight: '100vh',
@@ -18,13 +19,13 @@ export const Home = () => {
         >
             {/* Star Background - Only shows in dark mode */}
             <StarBackground />
-            
+
             {/* NavBar - Fixed at top with high z-index */}
             <Navbar />
-            
+
             {/* Theme Toggle - Outside content div to avoid z-index issues */}
             <ThemeToggle />
-            
+
             {/* Content layer */}
             <div style={{ position: 'relative', zIndex: 10 }}>
                 {/* Main Content */}
@@ -32,6 +33,7 @@ export const Home = () => {
                     <HeroSection />
                     <AboutSection />
                     <SkillsSection />
+                    <ProjectsSection />
                 </main>
 
                 {/* Footer */}
