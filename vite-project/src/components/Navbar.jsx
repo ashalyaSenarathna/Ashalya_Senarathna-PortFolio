@@ -6,6 +6,8 @@ export const Navbar = () => {
     const location = useLocation();
     const [isMobile, setIsMobile] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('home');
+    const [isDark, setIsDark] = useState(false);
 
     useEffect(() => {
         const checkMobile = () => {
@@ -16,19 +18,64 @@ export const Navbar = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    // Check for dark mode
+    useEffect(() => {
+        const checkDarkMode = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+        checkDarkMode();
+        const observer = new MutationObserver(checkDarkMode);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    // Track active section on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = ['home', 'about', 'skills', 'projects', 'contact'];
+            const scrollPosition = window.scrollY + 100;
+
+            for (const section of sections) {
+                const element = document.getElementById(section === 'home' ? 'hero' : section);
+                if (element) {
+                    const offsetTop = element.offsetTop;
+                    const offsetHeight = element.offsetHeight;
+                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                        setActiveSection(section);
+                        break;
+                    }
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Initial check
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     const navItems = [
-        { path: '/', label: 'Home' },
-        { path: '/#about', label: 'About' },
-        { path: '/#skills', label: 'Skills' },
-        { path: '/#projects', label: 'Projects' },
-        { path: '/#contact', label: 'Contact' },
+        { id: 'hero', label: 'Home', section: 'home' },
+        { id: 'about', label: 'About', section: 'about' },
+        { id: 'skills', label: 'Skills', section: 'skills' },
+        { id: 'projects', label: 'Projects', section: 'projects' },
+        { id: 'contact', label: 'Contact', section: 'contact' },
     ];
 
-    const isActive = (path) => {
-        if (path === '/') {
-            return location.pathname === '/' && !location.hash;
+    const scrollToSection = (sectionId) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
         }
-        return location.hash === path.split('#')[1];
+        setIsMenuOpen(false);
     };
 
     return (
@@ -49,8 +96,8 @@ export const Navbar = () => {
                 }}
             >
                 <span style={{ 
-                    color: '#ffffff',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.5)',
+                    color: isDark ? '#ffffff' : '#1e293b',
+                    textShadow: isDark ? '2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.5)' : 'none',
                     fontWeight: 700,
                     fontSize: isMobile ? '1.2rem' : '1.5rem',
                     fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -59,7 +106,7 @@ export const Navbar = () => {
                 </span>
                 <span style={{ 
                     color: '#a78bfa',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(167,139,250,0.8)',
+                    textShadow: isDark ? '2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(167,139,250,0.8)' : 'none',
                     fontWeight: 700,
                     fontSize: isMobile ? '1.2rem' : '1.5rem',
                     fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -89,21 +136,23 @@ export const Navbar = () => {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '1.5rem',
-                            marginLeft: '8rem', // Move further to the right
+                            marginLeft: '32rem', // Move further to the right
                         }}
                     >
                         {navItems.map((item) => {
-                            const active = isActive(item.path);
+                            const active = activeSection === item.section;
                             const textColor = active 
                                 ? 'hsl(var(--primary))' 
                                 : 'hsl(var(--foreground))';
                             
                             return (
-                                <Link
-                                    key={item.path}
-                                    to={item.path}
+                                <button
+                                    key={item.id}
+                                    onClick={() => scrollToSection(item.id)}
                                     style={{
                                         color: textColor,
+                                        background: 'none',
+                                        border: 'none',
                                         textDecoration: 'none',
                                         fontSize: '0.875rem',
                                         fontWeight: 500,
@@ -132,7 +181,7 @@ export const Navbar = () => {
                                             }}
                                         />
                                     )}
-                                </Link>
+                                </button>
                             );
                         })}
                     </div>
@@ -192,18 +241,19 @@ export const Navbar = () => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         {navItems.map((item) => {
-                            const active = isActive(item.path);
+                            const active = activeSection === item.section;
                             const textColor = active 
                                 ? 'hsl(var(--primary))' 
                                 : 'hsl(var(--foreground))';
                             
                             return (
-                                <Link
-                                    key={item.path}
-                                    to={item.path}
-                                    onClick={() => setIsMenuOpen(false)}
+                                <button
+                                    key={item.id}
+                                    onClick={() => scrollToSection(item.id)}
                                     style={{
                                         color: textColor,
+                                        background: 'none',
+                                        border: 'none',
                                         textDecoration: 'none',
                                         fontSize: '1.125rem',
                                         fontWeight: 500,
@@ -233,7 +283,7 @@ export const Navbar = () => {
                                             }}
                                         />
                                     )}
-                                </Link>
+                                </button>
                             );
                         })}
                     </nav>

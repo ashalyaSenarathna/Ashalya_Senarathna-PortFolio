@@ -24,7 +24,7 @@ export const HeroSection = () => {
                         passionate about building clean, modern, and user-focused digital experiences.
                     </p>
                     <div className="pt-4 opacity-0 animate-fade-in-delay-4">
-                        <a href="#projects" className="cosmic-button">
+                        <a href="#projects" className="cosmic-button" style={{ color: '#ffffff' }}>
                             View my work
                         </a>
                     </div>
@@ -34,10 +34,10 @@ export const HeroSection = () => {
                 <a
                     href="#projects"
                     className="flex flex-col items-center gap-1 text-sm transition-all duration-200 no-underline hero-bounce"
-                    style={{ color: '#ffffff' }}
+                    style={{ color: 'hsl(var(--foreground))' }}
                 >
-                    <ArrowDown className="w-6 h-6" style={{ color: '#ffffff' }} />
-                    <span className="text-xs mt-1" style={{ color: '#ffffff' }}>Scroll</span>
+                    <ArrowDown className="w-6 h-6" style={{ color: 'hsl(var(--foreground))' }} />
+                    <span className="text-xs mt-1" style={{ color: 'hsl(var(--foreground))' }}>Scroll</span>
                 </a>
             </div>
             </section>
