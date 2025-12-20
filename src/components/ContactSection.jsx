@@ -175,7 +175,7 @@ export const ContactSection = () => {
                                     title="Only letters and spaces are allowed"
                                     onInput={(e) => { e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, ''); }}
                                     style={{ width: '100%', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: '1px solid hsl(var(--border))', backgroundColor: 'hsl(var(--background))', color: 'inherit', outline: 'none' }}
-                                    placeholder="Pedro Machado..."
+                                    placeholder="Ashalya Senarathna"
                                 />
                             </div>
                             <div>
